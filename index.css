@@ -1,3 +1,52 @@
-#heading {
-  color: red;
+body {
+  font-family: monospace;
+}
+
+.header {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  padding: 10px 20px;
+  border: solid black;
+}
+
+.logo {
+  width: 100px;
+}
+
+.nav-items > ul {
+  display: flex;
+  flex-direction: row;
+}
+
+.nav-items > ul > li {
+  margin: 10px;
+  padding: 10px;
+  list-style: none;
+  font-size: 24px;
+}
+
+.search {
+  padding: 10px;
+}
+
+.res-container {
+  display: flex;
+  flex-direction: row;
+  flex-wrap: wrap;
+}
+
+.res-card {
+  margin: 5px;
+  width: 200px;
+  padding: 5px;
+}
+
+.res-card:hover {
+  border: 1px solid black;
+  cursor: pointer;
+}
+
+.res-logo {
+  width: 200px;
 }
