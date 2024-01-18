@@ -1,7 +1,7 @@
 # Namaste React
 
 
-# Parcel
+## Parcel
 - Dev Build
 - Local Server
 - HMR = Hot Module Replacement (Refresh page)
@@ -19,3 +19,38 @@
 - Host on HTTPs
 - Tree Shaking - remove unused code
 - Different Dev & Prod Bundles
+
+
+# Foody
+Header
+ - Logo
+ - Nav items
+Body
+ - Search
+ - RestaurantContainer
+     - Restaurant Card
+         - Img
+         - Name of the Restaurant
+         - Rating (star)
+         - Cuisine
+         - ETA
+Footer
+ - Copyright
+ - Links
+ - Address
+ - Contact
+<br>
+
+### Two Types of Export/Import
+- Default Export/Import
+    export default Component
+    import Component from "./path"
+- Named Export/Import
+    export const Component
+    import { Component } from "./path"
+<br><br>
+
+# React Hooks
+Normal JS functions
+- useState() - Super powerful state variables in react
+- useEffect() - 
