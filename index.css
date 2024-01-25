@@ -192,3 +192,22 @@ body {
   font-size: 14px;
   width: 90%;
 }
+
+.shimmer-menu-card-info {
+  margin: 20px 300px;
+  height: 250px;
+}
+
+.shimmer-res-name {
+  width: 200px;
+  height: 40px;
+  background-color: #e0e0e0;
+  margin-bottom: 10px;
+}
+
+.shimmer-menu-card {
+  margin: 20px 300px;
+  height: 200px;
+  background-color: #e0e0e0;
+  border-radius: 10px;
+}
