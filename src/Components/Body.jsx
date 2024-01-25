@@ -1,4 +1,5 @@
 import { useEffect, useState } from "react";
+import { Link } from "react-router-dom";
 
 // Components
 import RestaurantCard from "./RestaurantCard";
@@ -16,8 +17,6 @@ const Body = () => {
     async function fetchData() {
       const data = await fetch(SWIGGY_API);
       const json = await data.json();
-
-      // console.log(json?.data?.cards[4]?.card?.card?.gridElements?.infoWithStyle?.restaurants);
       setListOfRes(
         json?.data?.cards[4]?.card?.card?.gridElements?.infoWithStyle
           ?.restaurants
@@ -78,7 +77,13 @@ const Body = () => {
       </div>
       <div className="res-container">
         {tempRes.map((resData) => (
-          <RestaurantCard key={resData?.info?.id} resData={resData} />
+          <Link
+            to={`/restaurant/${resData?.info?.id}`}
+            key={resData?.info?.id}
+            style={{ textDecoration: "none", color: "black" }}
+          >
+            <RestaurantCard key={resData?.info?.id} resData={resData} />
+          </Link>
         ))}
       </div>
     </div>
