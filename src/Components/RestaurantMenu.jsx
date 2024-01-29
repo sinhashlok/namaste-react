@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
-import { MENU_API } from "../utils/constants";
+import { MENU_API, CDN_URL } from "../utils/constants";
 import ShimmerMenu from "./ShimmerMenu";
 
 const RestaurantMenu = () => {
@@ -45,7 +45,6 @@ const RestaurantMenu = () => {
       <h2>Menu</h2>
 
       {cardsList.map((card) => {
-        console.log(card);
         const itemCards = card?.card?.card?.itemCards;
         const categoriesCards = card?.card?.card?.categories;
         if (itemCards === undefined && categoriesCards === undefined) return;
@@ -62,21 +61,28 @@ const RestaurantMenu = () => {
                         {category.itemCards.map((item) => {
                           return (
                             <li className="menu-item-list">
-                              <div className="menu-item-name">
-                                {item?.card?.info?.name}{" "}
-                                {item?.card?.info?.itemAttribute
-                                  ?.vegClassifier == 1
-                                  ? "🟢"
-                                  : "🔴"}
-                              </div>
-                              <div className="menu-item-price">
-                                Cost: ₹
-                                {item?.card?.info?.price / 100 ||
-                                  item?.card?.info?.defaultPrice / 100}
-                                /-
-                              </div>
-                              <div className="menu-item-desc">
-                                {item?.card?.info?.description}
+                              <img
+                                className="menu-item-img"
+                                alt=""
+                                src={CDN_URL + item?.card?.info?.imageId}
+                              />
+                              <div>
+                                <div className="menu-item-name">
+                                  {item?.card?.info?.name}{" "}
+                                  {item?.card?.info?.itemAttribute
+                                    ?.vegClassifier == 1
+                                    ? "🟢"
+                                    : "🔴"}
+                                </div>
+                                <div className="menu-item-price">
+                                  Cost: ₹
+                                  {item?.card?.info?.price / 100 ||
+                                    item?.card?.info?.defaultPrice / 100}
+                                  /-
+                                </div>
+                                <div className="menu-item-desc">
+                                  {item?.card?.info?.description}
+                                </div>
                               </div>
                             </li>
                           );
@@ -86,18 +92,25 @@ const RestaurantMenu = () => {
                   })
                 : itemCards?.map((item) => (
                     <li className="menu-item-list">
-                      <div className="menu-item-name">
-                        {item?.card?.info?.name}{" "}
-                        {item?.card?.info?.isVeg == 1 ? "🟢" : "🔴"}
-                      </div>
-                      <div className="menu-item-price">
-                        Cost: ₹
-                        {item?.card?.info?.price / 100 ||
-                          item?.card?.info?.defaultPrice / 100}
-                        /-
-                      </div>
-                      <div className="menu-item-desc">
-                        {item?.card?.info?.description}
+                      <img
+                        className="menu-item-img"
+                        alt=""
+                        src={CDN_URL + item?.card?.info?.imageId}
+                      />
+                      <div>
+                        <div className="menu-item-name">
+                          {item?.card?.info?.name}{" "}
+                          {item?.card?.info?.isVeg == 1 ? "🟢" : "🔴"}
+                        </div>
+                        <div className="menu-item-price">
+                          Cost: ₹
+                          {item?.card?.info?.price / 100 ||
+                            item?.card?.info?.defaultPrice / 100}
+                          /-
+                        </div>
+                        <div className="menu-item-desc">
+                          {item?.card?.info?.description}
+                        </div>
                       </div>
                     </li>
                   ))}
