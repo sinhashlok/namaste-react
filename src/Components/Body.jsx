@@ -6,12 +6,14 @@ import RestaurantCard from "./RestaurantCard";
 import Shimmer from "./Shimmer";
 
 // Assets
-import { SWIGGY_API, URL, OPTIONS } from "../utils/constants";
+import { SWIGGY_API } from "../utils/constants";
+import useOnlineStaus from "../utils/useOnlineStatus";
 
 const Body = () => {
   const [listOfRes, setListOfRes] = useState([]);
   const [tempRes, setTempRes] = useState([]); // for search [not used]
   const [searchText, setSearchText] = useState("");
+  const online = useOnlineStaus();
 
   useEffect(() => {
     async function fetchData() {
@@ -37,6 +39,10 @@ const Body = () => {
     );
     setTempRes(filterResList);
   };
+
+  if (!online) {
+    return <h1 className="offline">You are offline</h1>;
+  }
 
   return listOfRes.length === 0 ? (
     <div className="body">

@@ -36,6 +36,14 @@ const Header = () => {
               Contact Us
             </Link>
           </li>
+          <li>
+            <Link
+              to="/grocery"
+              style={{ textDecoration: "none", color: "black" }}
+            >
+              Grocery
+            </Link>
+          </li>
           <li>Cart</li>
           <button className="login-btn" onClick={() => setLogin(!login)}>
             {login ? "Logout" : "Login"}

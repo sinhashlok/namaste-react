@@ -54,6 +54,8 @@ body {
   width: 250px;
   border-radius: 10px;
   padding: 10px;
+  min-height: 320px;
+  background-color: #e0e0e0;
 }
 
 .res-card:hover {
@@ -166,17 +168,23 @@ body {
 .menu-list {
   margin-left: auto;
   margin-right: auto;
-  width: 90%;
+  padding: 0px;
+  width: 95%;
   background-color: white;
   border-radius: 5px;
 }
 
 .menu-item-list {
   list-style: none;
-  padding: 20px 0px;
-
+  padding: 20px;
+  border-bottom: 1px solid #e0e0e0;
+  margin-bottom: 10px;
   display: flex;
   flex-direction: row;
+}
+
+.menu-item-list:last-child {
+  border-bottom: none;
 }
 
 .menu-item-img {
@@ -189,12 +197,11 @@ body {
 .menu-item-name {
   font-size: 18px;
   font-weight: bold;
-  /* margin-bottom: 5px; */
 }
 
 .menu-item-price {
-  font-size: 14px;
-  color: #a0a0a0;
+  font-size: 16px;
+  color: gray;
   margin-bottom: 5px;
 }
 
@@ -259,4 +266,10 @@ body {
 
 .user-card-social > h3 > a {
   color: black;
+}
+
+.offline {
+  /* position: absolute; */
+  text-align: center;
+  top: 50%;
 }
