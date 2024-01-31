@@ -43,25 +43,25 @@ const Body = () => {
   if (!online) {
     return <h1 className="offline">You are offline</h1>;
   }
-
+  
   return listOfRes.length === 0 ? (
-    <div className="body">
+    <div className="mx-8 my-8">
       <Shimmer />
     </div>
   ) : (
-    <div className="body">
-      <div className="filter">
-        <div className="search">
+    <div className="mx-8 my-8">
+      <div className="flex flex-col items-center">
+        <div className="flex">
           <input
             type="text"
-            className="search-box"
+            className="appearance-none border border-slate-200 rounded mr-2 py-2 px-3 text-gray-700 leading-tight focus:outline-1 focus:border-indigo-600 focus:shadow-outline"
             value={searchText}
             onChange={(e) => {
               setSearchText(e.target.value);
             }}
           />
           <button
-            className="search-btn"
+            className="bg-indigo-500 text-white px-4 py-2 rounded-md hover:bg-indigo-600 transition-all"
             onClick={(e) => {
               e.preventDefault();
               const filterResList = listOfRes.filter((res) =>
@@ -77,11 +77,14 @@ const Body = () => {
             Search
           </button>
         </div>
-        <button className="filter-btn" onClick={handleClick}>
+        <button
+          className="px-4 py-2 bg-indigo-500 text-white rounded-md hover:bg-indigo-600 transition-all mt-4 w-[295px] justify-center"
+          onClick={handleClick}
+        >
           Top Rated Restaurants
         </button>
       </div>
-      <div className="res-container">
+      <div className="flex flex-wrap mt-10 justify-center">
         {tempRes.map((resData) => (
           <Link
             to={`/restaurant/${resData?.info?.id}`}

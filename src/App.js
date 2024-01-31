@@ -5,7 +5,6 @@ import { createBrowserRouter, RouterProvider, Outlet } from "react-router-dom";
 // Components
 import Header from "./Components/Header";
 import Body from "./Components/Body";
-import About from "./Components/About";
 import Contact from "./Components/Contact";
 import Error from "./Components/Error";
 import RestaurantMenu from "./Components/RestaurantMenu";
@@ -20,6 +19,7 @@ const AppLayout = () => {
 };
 
 const Grocery = lazy(() => import("./Components/Grocery"));
+const About = lazy(() => import("./Components/About"));
 
 const appRouter = createBrowserRouter([
   {
@@ -32,7 +32,11 @@ const appRouter = createBrowserRouter([
       },
       {
         path: "/about",
-        element: <About />,
+        element: (
+          <Suspense fallback={<h1>Loading...</h1>}>
+            <About />
+          </Suspense>
+        ),
       },
       {
         path: "/contact",
@@ -40,8 +44,11 @@ const appRouter = createBrowserRouter([
       },
       {
         path: "/grocery",
-        element: <Suspense fallback={<h1>Loading
-        </h1>}><Grocery /></Suspense>,
+        element: (
+          <Suspense fallback={<h1>Loading...</h1>}>
+            <Grocery />
+          </Suspense>
+        ),
       },
       {
         path: "/restaurant/:resId",

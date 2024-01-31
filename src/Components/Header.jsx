@@ -3,51 +3,57 @@ import { Link } from "react-router-dom";
 
 // Assets
 import { LOGO_URL } from "../utils/constants";
+import useOnlineStaus from "../utils/useOnlineStatus";
 
 const Header = () => {
   const [login, setLogin] = useState(false);
+  const online = useOnlineStaus();
+
   return (
-    <div className="header">
+    <div className="flex justify-between my-4 mx-8 text-lg font-semibold">
       <div className="logo-container">
         <Link to="/" style={{ textDecoration: "none", color: "black" }}>
-          <img className="logo" src={LOGO_URL} alt="foody-logo" />
+          <img className="w-32 max-md:w-12" src={LOGO_URL} alt="foody-logo" />
         </Link>
       </div>
-      <div className="nav-items">
-        <ul>
-          <li>
-            <Link to="/" style={{ textDecoration: "none", color: "black" }}>
+      <div className="flex items-center max-md:hidden">
+        <ul className="flex items-center">
+          <li className="mx-6">Online Status: {online ? "✅" : "❌"}</li>
+          <li className="mx-6 text-slate-400 hover:text-black transition-all">
+            <Link to="/">
               Home
             </Link>
           </li>
-          <li>
+          <li className="mx-6 text-slate-400 hover:text-black transition-all">
             <Link
               to="/about"
-              style={{ textDecoration: "none", color: "black" }}
             >
               About Us
             </Link>
           </li>
-          <li>
+          <li className="mx-6 text-slate-400 hover:text-black transition-all">
             <Link
               to="/contact"
-              style={{ textDecoration: "none", color: "black" }}
             >
               Contact Us
             </Link>
           </li>
-          <li>
+          <li className="mx-6 text-slate-400 hover:text-black transition-all">
             <Link
               to="/grocery"
-              style={{ textDecoration: "none", color: "black" }}
             >
               Grocery
             </Link>
           </li>
-          <li>Cart</li>
-          <button className="login-btn" onClick={() => setLogin(!login)}>
-            {login ? "Logout" : "Login"}
-          </button>
+          <li className="mx-6 text-slate-400 hover:text-black transition-all">Cart</li>
+          <li className="mx-6 text-slate-300 hover:text-black transition-all">
+            <button
+              className="bg-indigo-500 px-4 py-2 text-white rounded-md hover:bg-indigo-600 transition-all"
+              onClick={() => setLogin(!login)}
+            >
+              {login ? "Logout" : "Login"}
+            </button>
+          </li>
         </ul>
       </div>
     </div>
