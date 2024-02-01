@@ -1,9 +1,10 @@
-import { useEffect, useState } from "react";
+import { useContext, useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 
 // Components
-import RestaurantCard from "./RestaurantCard";
+import RestaurantCard, { withPromotedLabel } from "./RestaurantCard";
 import Shimmer from "./Shimmer";
+import UserContext from "../utils/UserContext";
 
 // Assets
 import { SWIGGY_API } from "../utils/constants";
@@ -14,6 +15,9 @@ const Body = () => {
   const [tempRes, setTempRes] = useState([]); // for search [not used]
   const [searchText, setSearchText] = useState("");
   const online = useOnlineStaus();
+  const { setUserName } = useContext(UserContext);
+
+  const ResCardPromoted = withPromotedLabel(RestaurantCard);
 
   useEffect(() => {
     async function fetchData() {
@@ -35,7 +39,7 @@ const Body = () => {
   const handleClick = (e) => {
     e.preventDefault();
     const filterResList = listOfRes.filter(
-      (res) => res?.info?.avgRatingString >= 4.5
+      (res) => res?.info?.avgRatingString >= 4.3
     );
     setTempRes(filterResList);
   };
@@ -43,14 +47,14 @@ const Body = () => {
   if (!online) {
     return <h1 className="offline">You are offline</h1>;
   }
-  
+
   return listOfRes.length === 0 ? (
     <div className="mx-8 my-8">
       <Shimmer />
     </div>
   ) : (
     <div className="mx-8 my-8">
-      <div className="flex flex-col items-center">
+      <div className="flex flex-col items-center justify-center">
         <div className="flex">
           <input
             type="text"
@@ -83,15 +87,28 @@ const Body = () => {
         >
           Top Rated Restaurants
         </button>
+        <div className="py-2 flex justify-between items-center">
+          <label className="mr-2 text-lg">Username: </label>
+          <input
+            className="w-[200px] appearance-none border border-slate-200 rounded mr-2 py-2 px-3 text-gray-700 leading-tight focus:outline-1 focus:border-indigo-600 focus:shadow-outline"
+            onChange={(e) => {
+              setUserName(e.target.value);
+            }}
+          ></input>
+        </div>
       </div>
-      <div className="flex flex-wrap mt-10 justify-center">
+      <div className="flex flex-wrap mt-10">
         {tempRes.map((resData) => (
           <Link
             to={`/restaurant/${resData?.info?.id}`}
             key={resData?.info?.id}
             style={{ textDecoration: "none", color: "black" }}
           >
-            <RestaurantCard key={resData?.info?.id} resData={resData} />
+            {resData?.info?.avgRatingString >= 4.3 ? (
+              <ResCardPromoted key={resData?.info?.id} resData={resData} />
+            ) : (
+              <RestaurantCard key={resData?.info?.id} resData={resData} />
+            )}
           </Link>
         ))}
       </div>

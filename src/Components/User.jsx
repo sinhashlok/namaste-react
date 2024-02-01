@@ -1,4 +1,5 @@
 import React from "react";
+import UserContext from "../utils/UserContext";
 
 class User extends React.Component {
   constructor(props) {
@@ -26,9 +27,20 @@ class User extends React.Component {
 
     return (
       <div className="border-2 border-indigo-600 rounded-md flex p-2 max-md:text-sm">
-        <img className="rounded-md w-[150px] mr-2 max-md:w-[100px] max-md:h-[100px]" src={avatar_url} alt="User Avatar" />
+        <img
+          className="rounded-md w-[150px] mr-2 max-md:w-[100px] max-md:h-[100px]"
+          src={avatar_url}
+          alt="User Avatar"
+        />
         <div className="mt-auto">
-          <h2 className="text-xl font-semibold">{name}</h2>
+          <h2 className="text-xl font-semibold">
+            {name}{" "}
+            <UserContext.Consumer>
+              {(data) => {
+                return data.loggedIn !== undefined ? "🟢" : "";
+              }}
+            </UserContext.Consumer>
+          </h2>
           <h3>Location: {location}</h3>
           <h3>Contact: {email}</h3>
           <div className="flex">
