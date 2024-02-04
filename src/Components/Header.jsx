@@ -1,5 +1,6 @@
 import React, { useState, useContext } from "react";
 import { Link } from "react-router-dom";
+import { useSelector } from "react-redux";
 
 // Assets
 import { LOGO_URL } from "../utils/constants";
@@ -10,6 +11,8 @@ const Header = () => {
   const [login, setLogin] = useState(false);
   const online = useOnlineStaus();
   const { loggedIn } = useContext(UserContext);
+  // Subscribe to the cart state using a Selector
+  const cartItems = useSelector((store) => store.cart.items);
 
   return (
     <div className="flex justify-between my-4 mx-8 text-lg font-semibold">
@@ -33,8 +36,13 @@ const Header = () => {
           <li className="mx-6 text-slate-400 hover:text-black transition-all">
             <Link to="/grocery">Grocery</Link>
           </li>
-          <li className="mx-6 text-slate-400 hover:text-black transition-all">
-            Cart
+          <li className="mx-6 text-2xl cursor-pointer flex items-center">
+            <Link to="/cart">
+              🛒{" "}
+              <span className="mx-1 text-[16px] text-slate-700">
+                ({cartItems.length} items)
+              </span>
+            </Link>
           </li>
           <li className="mx-6 text-slate-300 hover:text-black transition-all">
             <button
