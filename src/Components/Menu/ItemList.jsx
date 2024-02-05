@@ -1,19 +1,20 @@
 import { CDN_URL } from "../../utils/constants";
 import { addItem, removeItem, clearCart } from "../../utils/store/cartSlice";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 
 const ItemList = ({ list }) => {
+  const cartItems = useSelector((store) => store.cart.items);
   const dispatch = useDispatch();
-
   const handleAddItem = (item) => {
     dispatch(addItem(item));
+  };
+  const handleRemoveItem = (item) => {
+    dispatch(removeItem(item));
   };
 
   return (
     <div>
       <ul>
-
-
         {list?.map((item) => {
           const { id, name, price, defaultPrice, imageId, isVeg, description } =
             item?.card?.info;
@@ -39,12 +40,36 @@ const ItemList = ({ list }) => {
                   src={CDN_URL + imageId}
                   className="w-[300px] ml-4 rounded-lg shadow-xl"
                 />
-                <button
-                  className="bg-indigo-500 font-bold px-4 py-2 mt-[-20px] w-[102px] text-white rounded-md hover:bg-indigo-600 hover:shadow-md transition-all"
-                  onClick={() => handleAddItem(item?.card?.info)}
-                >
-                  ADD +
-                </button>
+                {cartItems?.filter((cartItem) => cartItem.id === id).length ===
+                0 ? (
+                  <button
+                    className="bg-indigo-500 font-bold px-4 py-2 mt-[-20px] w-[102px] text-white rounded-md hover:bg-indigo-600 hover:shadow-md transition-all"
+                    onClick={() => handleAddItem(item?.card?.info)}
+                  >
+                    ADD +
+                  </button>
+                ) : (
+                  <div>
+                    <button
+                      className="bg-indigo-500 font-bold py-2 mt-[-20px] w-[34px] text-white rounded-md rounded-tr-none rounded-br-none hover:bg-indigo-600 hover:shadow-md transition-all"
+                      onClick={() => handleRemoveItem(item?.card?.info)}
+                    >
+                      -
+                    </button>
+                    <button className="bg-white font-bold py-2 mt-[-20px] w-[34px] hover:shadow-md transition-all">
+                      {
+                        cartItems?.filter((cartItem) => cartItem.id === id)
+                          .length
+                      }
+                    </button>
+                    <button
+                      className="bg-indigo-500 font-bold py-2 mt-[-20px] w-[34px] text-white rounded-md rounded-tl-none rounded-bl-none hover:bg-indigo-600 hover:shadow-md transition-all"
+                      onClick={() => handleAddItem(item?.card?.info)}
+                    >
+                      +
+                    </button>
+                  </div>
+                )}
               </div>
             </div>
           );

@@ -1,15 +1,19 @@
 import { useState } from "react";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 
 import { CDN_URL } from "../../utils/constants";
-import { addItem } from "../../utils/store/cartSlice";
+import { addItem, removeItem } from "../../utils/store/cartSlice";
 
 const ComboList = ({ list }) => {
   const [showItems, setShowItems] = useState(false);
   const items = list?.itemCards;
+  const cartItems = useSelector((store) => store.cart.items);
   const dispatch = useDispatch();
-  const handleAdd = (item) => {
+  const handleAddItem = (item) => {
     dispatch(addItem(item?.card?.info));
+  };
+  const handleRemoveItem = (item) => {
+    dispatch(removeItem(item?.card?.info));
   };
 
   const handleClick = () => {
@@ -57,12 +61,36 @@ const ComboList = ({ list }) => {
                       src={CDN_URL + imageId}
                       className="w-[300px] ml-4 rounded-lg shadow-xl"
                     />
-                    <button
-                      className="bg-indigo-500 font-bold px-4 py-2 mt-[-20px] w-[102px] text-white rounded-md hover:bg-indigo-600 hover:shadow-md transition-all"
-                      onClick={() => handleAdd(item)}
-                    >
-                      ADD +
-                    </button>
+                    {cartItems?.filter((cartItem) => cartItem.id === id)
+                      .length === 0 ? (
+                      <button
+                        className="bg-indigo-500 font-bold px-4 py-2 mt-[-20px] w-[102px] text-white rounded-md hover:bg-indigo-600 hover:shadow-md transition-all"
+                        onClick={() => handleAddItem(item)}
+                      >
+                        ADD +
+                      </button>
+                    ) : (
+                      <div>
+                        <button
+                          className="bg-indigo-500 font-bold py-2 mt-[-20px] w-[34px] text-white rounded-md rounded-tr-none rounded-br-none hover:bg-indigo-600 hover:shadow-md transition-all"
+                          onClick={() => handleRemoveItem(item)}
+                        >
+                          -
+                        </button>
+                        <button className="bg-white font-bold py-2 mt-[-20px] w-[34px] hover:shadow-md transition-all">
+                          {
+                            cartItems?.filter((cartItem) => cartItem.id === id)
+                              .length
+                          }
+                        </button>
+                        <button
+                          className="bg-indigo-500 font-bold py-2 mt-[-20px] w-[34px] text-white rounded-md rounded-tl-none rounded-bl-none hover:bg-indigo-600 hover:shadow-md transition-all"
+                          onClick={() => handleAddItem(item)}
+                        >
+                          +
+                        </button>
+                      </div>
+                    )}
                   </div>
                 </div>
               );

@@ -1,10 +1,30 @@
 import { useDispatch, useSelector } from "react-redux";
 import { CDN_URL } from "../utils/constants";
-import { removeItem, clearCart } from "../utils/store/cartSlice";
+import { addItem, removeItem, clearCart } from "../utils/store/cartSlice";
 
 const Cart = () => {
   const cartItems = useSelector((store) => store.cart.items);
+  let totalCost = 0;
+  let data = [];
+  cartItems.map((item) => {
+    let index = data.findIndex((x) => x.id === item.id);
+    if (index === -1) {
+      data.push({
+        ...item,
+        count: 1,
+      });
+    } else {
+      data[index].count += 1;
+    }
+
+    totalCost += item.price / 100 || item.defaultPrice / 100;
+  });
+  totalCost = totalCost.toFixed(2);
   const dispatch = useDispatch();
+
+  const handleAdd = (item) => {
+    dispatch(addItem(item));
+  };
 
   const handleRemove = (item) => {
     dispatch(removeItem(item));
@@ -33,7 +53,7 @@ const Cart = () => {
             Your cart is empty
           </h1>
         ) : (
-          cartItems.map((item, index) => {
+          data.map((item, index) => {
             return (
               <div
                 key={index}
@@ -53,17 +73,37 @@ const Cart = () => {
                     </h1>
                   </div>
                 </div>
-                <button
-                  className="bg-indigo-500 px-4 py-2 text-white rounded-md hover:bg-indigo-600 transition-all"
-                  onClick={() => handleRemove(item)}
-                >
-                  Remove
-                </button>
+                {
+                  <div>
+                    <button
+                      className="bg-indigo-500 px-4 py-2 text-white rounded-md rounded-tr-none rounded-br-none hover:bg-indigo-600 transition-all"
+                      onClick={() => handleRemove(item)}
+                    >
+                      -
+                    </button>
+                    <button className="bg-white font-bold py-2 mt-[-20px] w-[34px] hover:shadow-md transition-all">
+                      {item.count}
+                    </button>
+                    <button
+                      className="bg-indigo-500 px-4 py-2 text-white rounded-md rounded-tl-none rounded-bl-none hover:bg-indigo-600 transition-all"
+                      onClick={() => handleAdd(item)}
+                    >
+                      +
+                    </button>
+                  </div>
+                }
               </div>
             );
           })
         )}
       </div>
+      {cartItems.length === 0 ? null : (
+        <div className="border-t-2 border-red-200 mt-4 pt-4 text-xl">
+          <div className="flex justify-between border-indigo-500 p-2 bg-slate-300 rounded-md">
+            Total Cost: <div className="text-red-500">₹{totalCost}</div>
+          </div>
+        </div>
+      )}
     </div>
   );
 };
