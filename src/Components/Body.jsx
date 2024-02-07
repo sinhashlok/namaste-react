@@ -4,37 +4,54 @@ import { Link } from "react-router-dom";
 // Components
 import RestaurantCard, { withPromotedLabel } from "./RestaurantCard";
 import Shimmer from "./Shimmer";
+// Utils
 import UserContext from "../utils/UserContext";
-
+import { useGetRestaurantsQuery } from "../utils/store/apiSlice";
 // Assets
 import { SWIGGY_API } from "../utils/constants";
 import useOnlineStaus from "../utils/useOnlineStatus";
 
 const Body = () => {
-  const [listOfRes, setListOfRes] = useState([]);
   const [tempRes, setTempRes] = useState([]); // for search [not used]
+  let listOfRes = [];
   const [searchText, setSearchText] = useState("");
   const online = useOnlineStaus();
   const { setUserName } = useContext(UserContext);
+  const {
+    data: data,
+    isLoading,
+    isFetching,
+    isSuccess,
+    isError,
+    error,
+  } = useGetRestaurantsQuery();
+  if (isSuccess) {
+    listOfRes =
+      data?.data?.cards[4]?.card?.card?.gridElements?.infoWithStyle
+        ?.restaurants;
+  }
+  useEffect(() => {
+    setTempRes(listOfRes);
+  }, [isSuccess]);
 
   const ResCardPromoted = withPromotedLabel(RestaurantCard);
 
-  useEffect(() => {
-    async function fetchData() {
-      const data = await fetch(SWIGGY_API);
-      const json = await data.json();
-      setListOfRes(
-        json?.data?.cards[4]?.card?.card?.gridElements?.infoWithStyle
-          ?.restaurants
-      );
-      setTempRes(
-        json?.data?.cards[4]?.card?.card?.gridElements?.infoWithStyle
-          ?.restaurants
-      );
-    }
+  // useEffect(() => {
+  //   async function fetchData() {
+  //     const data = await fetch(SWIGGY_API);
+  //     const json = await data.json();
+  //     setListOfRes(
+  //       json?.data?.cards[4]?.card?.card?.gridElements?.infoWithStyle
+  //         ?.restaurants
+  //     );
+  //     setTempRes(
+  //       json?.data?.cards[4]?.card?.card?.gridElements?.infoWithStyle
+  //         ?.restaurants
+  //     );
+  //   }
 
-    fetchData();
-  }, []);
+  //   fetchData();
+  // }, []);
 
   const handleClick = (e) => {
     e.preventDefault();
@@ -48,7 +65,7 @@ const Body = () => {
     return <h1 className="offline">You are offline</h1>;
   }
 
-  return listOfRes.length === 0 ? (
+  return isFetching ? (
     <div className="mx-8 my-8">
       <Shimmer />
     </div>
