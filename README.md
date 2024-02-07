@@ -1,6 +1,6 @@
 # Namaste React
 
-### <a href="https://help.netflix.com/en/" target="_blank" rel="noreferrer">Live Link</a>
+### <a href="https://sinhashlok-foodify.netlify.app/" target="_blank" rel="noreferrer">Live Link</a>
 
 ## Installation
 
