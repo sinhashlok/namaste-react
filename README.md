@@ -8,6 +8,13 @@
 `npm start` - localhost:1234<br>
 `npm build`<br>
 
+##### If you face a CORS issue - Please use a disabled version of CORS browser
+For Chrome Windows `chrome.exe --user-data-dir="C://Chrome dev session" --disable-web-security`
+<br>
+For Chrome MacOS - `open -n -a /Applications/Google\ Chrome.app/Contents/MacOS/Google\ Chrome --args --user-data-dir="/tmp/chrome_dev_test" --disable-web-security`
+<br>
+For Brave MacOS - `open -n -a /Applications/Brave\ Browser.app/Contents/MacOS/Brave\ Browser --args --user-data-dir="/tmp/brave_dev_sess_1" --disable-web-security`
+
 ## Description
 
 <span>
