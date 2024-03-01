@@ -30,6 +30,7 @@ const Body = () => {
       data?.data?.cards[4]?.card?.card?.gridElements?.infoWithStyle
         ?.restaurants;
   }
+
   useEffect(() => {
     setTempRes(listOfRes);
   }, [isSuccess]);
@@ -68,6 +69,12 @@ const Body = () => {
   return isFetching ? (
     <div className="mx-8 my-8">
       <Shimmer />
+    </div>
+  ) : isError ? (
+    <div className="text-center text-2xl">
+      Please use CORS diabled browser.
+      <br />
+      Sorry for the inconvenience
     </div>
   ) : (
     <div className="mx-8 my-8">
