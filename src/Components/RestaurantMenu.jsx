@@ -19,10 +19,9 @@ const RestaurantMenu = () => {
     costForTwoMessage,
     avgRatingString,
     totalRatingsString,
-  } = resInfo?.data?.cards[0]?.card?.card?.info;
-
+  } = resInfo?.data?.cards[2]?.card?.card?.info;
   const cardsList =
-    resInfo?.data?.cards[2]?.groupedCard?.cardGroupMap?.REGULAR?.cards;
+    resInfo?.data?.cards[4]?.groupedCard?.cardGroupMap?.REGULAR?.cards;
   const itemCards = cardsList.filter(
     (card) =>
       card?.card?.card?.["@type"] ===
@@ -80,81 +79,6 @@ const RestaurantMenu = () => {
           }}
         />
       ))}
-
-      {/* {cardsList.map((card) => {
-        const itemCards = card?.card?.card?.itemCards;
-        const categoriesCards = card?.card?.card?.categories;
-        if (itemCards === undefined && categoriesCards === undefined) return;
-        return (
-          <div className="flex flex-col mt-4 bg-slate-100 p-4 rounded-md">
-            <h2 className="text-xl font-bold mb-2">{card?.card?.card?.title}</h2>
-            <ul className="flex flex-col">
-              {itemCards === undefined
-                ? categoriesCards?.map((category) => {
-                    const title = category?.title;
-                    return (
-                      <div className="category-item">
-                        <h2 className="text-lg text-red-500 font-semibold">{title}</h2>
-                        {category.itemCards.map((item) => {
-                          return (
-                            <li className="flex py-4 mb-2 border-b-[1px] last:border-0 border-black max-md:flex-col max-md:text-sm">
-                              <img
-                                className="w-[300px] rounded-md mr-2 max-md:w-[100px] max-md:h-[100px]"
-                                alt=""
-                                src={CDN_URL + item?.card?.info?.imageId}
-                              />
-                              <div>
-                                <div className="text-lg font-semibold mb-4">
-                                  {item?.card?.info?.name}{" "}
-                                  {item?.card?.info?.itemAttribute
-                                    ?.vegClassifier == 1
-                                    ? "🟢"
-                                    : "🔴"}
-                                </div>
-                                <div className="font-semibold">
-                                  Cost: ₹
-                                  {item?.card?.info?.price / 100 ||
-                                    item?.card?.info?.defaultPrice / 100}
-                                  /-
-                                </div>
-                                <div className="menu-item-desc">
-                                  {item?.card?.info?.description}
-                                </div>
-                              </div>
-                            </li>
-                          );
-                        })}
-                      </div>
-                    );
-                  })
-                : itemCards?.map((item) => (
-                    <li className="flex py-4 mb-2 border-b-[1px] last:border-0 border-black max-md:flex-col max-md:text-sm">
-                      <img
-                        className="w-[300px] rounded-md mr-2 max-md:w-[100px] max-md:h-[100px]"
-                        alt=""
-                        src={CDN_URL + item?.card?.info?.imageId}
-                      />
-                      <div>
-                        <div className="text-lg font-semibold mb-4">
-                          {item?.card?.info?.name}{" "}
-                          {item?.card?.info?.isVeg == 1 ? "🟢" : "🔴"}
-                        </div>
-                        <div className="font-semibold">
-                          Cost: ₹
-                          {item?.card?.info?.price / 100 ||
-                            item?.card?.info?.defaultPrice / 100}
-                          /-
-                        </div>
-                        <div className="menu-item-desc">
-                          {item?.card?.info?.description}
-                        </div>
-                      </div>
-                    </li>
-                  ))}
-            </ul>
-          </div>
-        );
-      })} */}
     </div>
   );
 };
